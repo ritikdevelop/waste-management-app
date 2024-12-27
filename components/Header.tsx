@@ -73,7 +73,7 @@ export default function Header({ onMenuClick, totalEarnings }: HeaderProps) {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [balance, setBalance] = useState(0);
 
-  console.log("user info", userInfo);
+  // console.log("user info", userInfo);
 
   useEffect(() => {
     const init = async () => {
