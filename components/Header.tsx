@@ -41,18 +41,21 @@ const chainConfig = {
   chainNamespace: CHAIN_NAMESPACES.EIP155,
   chainId: "0xaa36a7",
   rpcTarget: "https://rpc.ankr.com/eth_sepolia",
-  displayName: "Ethereum Sepolia Testnet",
+  displayName: "Ethereum Sepolia",
   blockExplorerUrl: "https://sepolia.etherscan.io",
   ticker: "ETH",
   tickerName: "Ethereum",
-  logo: "https://cryptologos.cc/logos/ethereum-eth-logo.png",
+  logo: "https://web3auth.io/images/web3authlog.png",
 };
 
 const privateKeyProvider = new EthereumPrivateKeyProvider({
-  config: { chainConfig },
+  config: { 
+    chainConfig 
+  },
 });
 
 const web3auth = new Web3Auth({
+  chainConfig,
   clientId,
   web3AuthNetwork: WEB3AUTH_NETWORK.TESTNET, // Changed from SAPPHIRE_MAINNET to TESTNET
   privateKeyProvider,
@@ -161,20 +164,27 @@ export default function Header({ onMenuClick, totalEarnings }: HeaderProps) {
       return;
     }
     try {
+      if (!web3auth.modal) {
+        console.log("Web3Auth modal not initialized yet");
+        return;
+      }
       const web3authProvider = await web3auth.connect();
       setProvider(web3authProvider);
-      setLoggedIn(true);
+      // setLoggedIn(true);
       const user = await web3auth.getUserInfo();
       setUserInfo(user);
-      if (user.email) {
-        localStorage.setItem("userEmail", user.email);
-        try {
-          await createUser(user.email, user.name || "Anonymous User");
-        } catch (error) {
-          console.error("Error creating user:", error);
-          // Handle the error appropriately, maybe show a message to the user
-        }
+      if (web3auth.connected) {
+        setLoggedIn(true);
       }
+      // if (user.email) {
+      //   localStorage.setItem("userEmail", user.email);
+      //   try {
+      //     await createUser(user.email, user.name || "Anonymous User");
+      //   } catch (error) {
+      //     console.error("Error creating user:", error);
+      //     // Handle the error appropriately, maybe show a message to the user
+      //   }
+      // }
     } catch (error) {
       console.error("Error during login:", error);
     }
