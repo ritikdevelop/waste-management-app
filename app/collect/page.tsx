@@ -162,7 +162,7 @@ export default function CollectPage() {
         {
           inlineData: {
             data: base64Data,
-            mimeType: "image/jpeg", // Adjust this if you know the exact type
+            mimeType: "image/jpeg", //! Adjust this if you know the exact type
           },
         },
       ];
