@@ -35,17 +35,17 @@ import {
   getUserBalance,
 } from "@/utils/db/actions";
 
-const clientId = process.env.NEXT_PUBLIC_WEB3_AUTH_CLIENT_ID;
+const clientId = 'BEyQScBrr1Dro3L_AFWCwZX3XHvkQ_QbGzt0d_Cn3j_XKxPSvJeoeMxE5dy2Gujqb5jQRMbHsA_GL7XgCarg194';
 
 const chainConfig = {
   chainNamespace: CHAIN_NAMESPACES.EIP155,
-  chainId: "0xaa36a7",
-  rpcTarget: "https://rpc.ankr.com/eth_sepolia",
-  displayName: "Ethereum Sepolia",
-  blockExplorerUrl: "https://sepolia.etherscan.io",
-  ticker: "ETH",
-  tickerName: "Ethereum",
-  logo: "https://web3auth.io/images/web3authlog.png",
+    chainId: "0xaa36a7",
+    displayName: "Ethereum Sepolia",
+    tickerName: "Ethereum",
+    ticker: "ETH",
+    rpcTarget: "https://rpc.ankr.com/eth_sepolia",
+    blockExplorerUrl: "https://sepolia.etherscan.io",
+    logo: "https://web3auth.io/images/web3authlog.png",
 };
 
 const privateKeyProvider = new EthereumPrivateKeyProvider({
@@ -176,15 +176,15 @@ export default function Header({ onMenuClick, totalEarnings }: HeaderProps) {
       if (web3auth.connected) {
         setLoggedIn(true);
       }
-      // if (user.email) {
-      //   localStorage.setItem("userEmail", user.email);
-      //   try {
-      //     await createUser(user.email, user.name || "Anonymous User");
-      //   } catch (error) {
-      //     console.error("Error creating user:", error);
-      //     // Handle the error appropriately, maybe show a message to the user
-      //   }
-      // }
+      if (user.email) {
+        localStorage.setItem("userEmail", user.email);
+        try {
+          await createUser(user.email, user.name || "Anonymous User");
+        } catch (error) {
+          console.error("Error creating user:", error);
+          // Handle the error appropriately, maybe show a message to the user
+        }
+      }
     } catch (error) {
       console.error("Error during login:", error);
     }
